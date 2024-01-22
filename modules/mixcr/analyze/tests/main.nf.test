@@ -5,8 +5,6 @@ nextflow_process {
     process "MIXCR_ANALYZE"
     config "./nextflow.config"
 
-    tag "modules"
-    tag "modules_nfcore"
     tag "mixcr"
     tag "mixcr/analyze"
 
@@ -19,19 +17,34 @@ nextflow_process {
                 input[0] =
                 [
                     ['id':'TCR_cat'],
-                    file("${projectDir}/test-datasets/23570MA0002L01_1_20k.fastq.gz"),
-                    file("${projectDir}/test-datasets/23570MA0002L01_2_20k.fastq.gz")
+                    [
+                        file("${projectDir}/test-datasets/23570MA0002L01_1_20k.fastq.gz"),
+                        file("${projectDir}/test-datasets/23570MA0002L01_2_20k.fastq.gz")
+                    ]
                 ]
                 input[1] = 'generic-amplicon-with-umi'
+                input[2] = file("${projectDir}/test-datasets/imgt.202312-3.sv8.json.gz")
                 """
             }
         }
 
         then {
-            assert process.success
-            assert snapshot(process.out).match()
-        }
+            def lines     = new File(process.out.log.get(0).get(1)).readLines()
+            def lastLine  = lines.get(lines.size()-1)
 
+            assert lastLine == 'Analysis finished successfully.'
+            assert snapshot(process.out.align_report_json).match("align_report_json")
+            assert snapshot(process.out.assemble_report_json).match("assemble_report_json")
+            assert snapshot(process.out.clns).match("clns")
+            assert snapshot(process.out.clones_TRB_tsv).match("clones_TRB_tsv")
+            assert snapshot(process.out.qc_json).match("qc_json")
+            assert snapshot(process.out.qc_txt).match("qc_txt")
+            assert snapshot(process.out.refined_vdjca).match("refined_vdjca")
+            assert snapshot(process.out.refine_report_json).match("refine_report_json")
+            assert snapshot(process.out.vdjca).match("vdjca")
+            assert snapshot(process.out.versions).match("versions")
+        }
     }
 
 }
+

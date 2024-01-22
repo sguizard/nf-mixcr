@@ -1,0 +1,27 @@
+{
+    "MIXCR_EXPORTQC_ALIGN Compute align qc": {
+        "content": [
+            {
+                "0": [
+                    "TCR_cats_exportQC_align.pdf:md5,fd074615ab1b127628c31367d6b065f2"
+                ],
+                "1": [
+                    "TCR_cats_exportQC_align.png:md5,9579953b2e36b1900bd410448cb627aa"
+                ],
+                "2": [
+                    "versions.yml:md5,870f4bf97a0db96b27903f14a04d0976"
+                ],
+                "qc_align_pdf": [
+                    "TCR_cats_exportQC_align.pdf:md5,fd074615ab1b127628c31367d6b065f2"
+                ],
+                "qc_align_png": [
+                    "TCR_cats_exportQC_align.png:md5,9579953b2e36b1900bd410448cb627aa"
+                ],
+                "versions": [
+                    "versions.yml:md5,870f4bf97a0db96b27903f14a04d0976"
+                ]
+            }
+        ],
+        "timestamp": "2024-01-22T12:02:58.356037"
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "MIXCR_EXPORTCLONES Export clone tables": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "TCR_cat"
+                        },
+                        [
+                            "[id:TCR_cat]_exportClones_IGL.tsv:md5,dbb08d4d51c2ce9370e767aa40696e2e",
+                            "[id:TCR_cat]_exportClones_TRB.tsv:md5,cd23934a15f41111c0e1bd580bfbed4d"
+                        ]
+                    ]
+                ],
+                "1": [
+                    "versions.yml:md5,ecf1f51180f925c42ab6c6850c1f66a3"
+                ],
+                "tables": [
+                    [
+                        {
+                            "id": "TCR_cat"
+                        },
+                        [
+                            "[id:TCR_cat]_exportClones_IGL.tsv:md5,dbb08d4d51c2ce9370e767aa40696e2e",
+                            "[id:TCR_cat]_exportClones_TRB.tsv:md5,cd23934a15f41111c0e1bd580bfbed4d"
+                        ]
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,ecf1f51180f925c42ab6c6850c1f66a3"
+                ]
+            }
+        ],
+        "timestamp": "2024-01-22T12:05:23.456234"
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "MIXCR_EXPORTREPORTS Compute and export reports": {
+        "content": [
+            {
+                "0": [
+                    "[id:TCR_cat].report.json:md5,ba2a584fa96d2d05aa968a3647daf180"
+                ],
+                "1": [
+                    "[id:TCR_cat].report.txt:md5,01e156da28e7d11b821e520e8dc32359"
+                ],
+                "2": [
+                    "versions.yml:md5,73d3c14d87591f484cdc03d1a32ccc17"
+                ],
+                "exportReports_json": [
+                    "[id:TCR_cat].report.json:md5,ba2a584fa96d2d05aa968a3647daf180"
+                ],
+                "exportReports_txt": [
+                    "[id:TCR_cat].report.txt:md5,01e156da28e7d11b821e520e8dc32359"
+                ],
+                "versions": [
+                    "versions.yml:md5,73d3c14d87591f484cdc03d1a32ccc17"
+                ]
+            }
+        ],
+        "timestamp": "2024-01-22T11:56:48.383565"
+    }
+}

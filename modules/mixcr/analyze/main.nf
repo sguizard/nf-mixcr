@@ -2,30 +2,32 @@ process MIXCR_ANALYZE {
     tag "$id"
 
     container 'ghcr.io/milaboratory/mixcr/mixcr:4.6.0'
+    // container 'https://github.com/sguizard/mixcr-singularity-container/blob/master/mixcr.sif'
 
     input:
-    tuple val(id), path(reads)
+    tuple val(meta), path(reads)
     val(preset)
     path(library)
 
     output:
-    tuple val(id), path("*.align.report.json")   , emit: align_report_json
-    tuple val(id), path("*.align.report.txt")    , emit: align_report_txt
-    tuple val(id), path("*.assemble.report.json"), emit: assemble_report_json
-    tuple val(id), path("*.assemble.report.txt") , emit: assemble_report_txt
-    tuple val(id), path("*.clns")                , emit: clns
-    tuple val(id), path("*.clones_TRB.tsv")      , emit: clones_TRB_tsv
-    tuple val(id), path("*.qc.json")             , emit: qc_json
-    tuple val(id), path("*.qc.txt")              , emit: qc_txt
-    tuple val(id), path("*.refined.vdjca")       , emit: refined_vdjca
-    tuple val(id), path("*.refine.report.json")  , emit: refine_report_json
-    tuple val(id), path("*.refine.report.txt")   , emit: refine_report_txt
-    tuple val(id), path("*.vdjca")               , emit: vdjca
-    path  "versions.yml"                         , emit: versions
+    tuple val(meta), path("*.align.report.json")   , emit: align_report_json
+    tuple val(meta), path("*.align.report.txt")    , emit: align_report_txt
+    tuple val(meta), path("*.assemble.report.json"), emit: assemble_report_json
+    tuple val(meta), path("*.assemble.report.txt") , emit: assemble_report_txt
+    tuple val(meta), path("*.clns")                , emit: clns
+    tuple val(meta), path("*.clones_TRB.tsv")      , emit: clones_TRB_tsv
+    tuple val(meta), path("*.qc.json")             , emit: qc_json
+    tuple val(meta), path("*.qc.txt")              , emit: qc_txt
+    tuple val(meta), path("*_non_refined.vdjca")   , emit: vdjca
+    tuple val(meta), path("*.refined.vdjca")       , emit: refined_vdjca
+    tuple val(meta), path("*.refine.report.json")  , emit: refine_report_json
+    tuple val(meta), path("*.refine.report.txt")   , emit: refine_report_txt
+    tuple val(meta), path("*.log")                 , emit: log
+    path  "versions.yml"                           , emit: versions
 
     script:
     def args   = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: id
+    def prefix = task.ext.prefix ?: meta.id
     def lib    = library.toString() == 'NO_FILE' ? '' : "--library ${library}"
     lib.replaceFirst('.json.gz', '')
     def r1     = reads[0]
@@ -39,7 +41,9 @@ process MIXCR_ANALYZE {
         --threads ${task.cpus} \\
         $r1 \\
         $r2 \\
-        $id
+        ${meta.id} > ${prefix}.log
+
+    mv ${prefix}.vdjca ${prefix}_non_refined.vdjca
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -61,7 +65,7 @@ process MIXCR_ANALYZE {
     touch ${prefix}.refined.vdjca
     touch ${prefix}.refine.report.json
     touch ${prefix}.refine.report.txt
-    touch ${prefix}.vdjca
+    touch ${prefix}_non_refined.vdjca
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

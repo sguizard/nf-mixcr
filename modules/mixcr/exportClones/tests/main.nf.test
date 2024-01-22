@@ -1,0 +1,50 @@
+nextflow_process {
+
+    name "Test Process MIXCR_EXPORTCLONES"
+    script "../main.nf"
+    process "MIXCR_EXPORTCLONES"
+    config "nextflow.config"
+
+    tag "mixcr"
+    tag "mixcr/exportClones"
+
+    setup {
+        run("MIXCR_ANALYZE") {
+            script "../../analyze/main.nf"
+            config "../../analyze/tests/nextflow.config"
+            process {
+                """
+                input[0] = 
+                [
+                    ['id':'TCR_cat'],
+                    [
+                        file("${projectDir}/test-datasets/23570MA0002L01_1_20k.fastq.gz"),
+                        file("${projectDir}/test-datasets/23570MA0002L01_2_20k.fastq.gz")
+                    ]
+                ]
+                input[1] = 'generic-amplicon-with-umi'
+                input[2] = file("${projectDir}/test-datasets/imgt.202312-3.sv8.json.gz")
+                """
+            }
+        }
+    }
+
+    test("MIXCR_EXPORTCLONES Export clone tables") {
+
+        when {
+            process {
+                """
+                input[0] = MIXCR_ANALYZE.out.clns
+                input[1] = file("${projectDir}/test-datasets/imgt.202312-3.sv8.json.gz")
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert snapshot(process.out).match()
+        }
+
+    }
+
+}
