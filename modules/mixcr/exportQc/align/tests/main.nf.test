@@ -28,7 +28,7 @@ nextflow_process {
         }
     }
 
-    test("MIXCR_EXPORTQC_ALIGN Compute align qc") {
+    test("MIXCR_EXPORTQC_ALIGN Compute align QC") {
 
         when {
             process {
