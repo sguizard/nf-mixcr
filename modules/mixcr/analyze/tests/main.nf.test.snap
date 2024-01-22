@@ -6,11 +6,11 @@
                     {
                         "id": "TCR_cat"
                     },
-                    "TCR_cat.clns:md5,51df18d9a7af225237996eb4e5a12453"
+                    "TCR_cat.clns:md5,f1f97ee142075579df3f1133d0f6d81d"
                 ]
             ]
         ],
-        "timestamp": "2024-01-19T22:53:00.19639"
+        "timestamp": "2024-01-22T14:52:37.719662"
     },
     "qc_txt": {
         "content": [
@@ -53,11 +53,11 @@
                     {
                         "id": "TCR_cat"
                     },
-                    "TCR_cat.refined.vdjca:md5,56924a5acbc384af0bdf4a224dc749c8"
+                    "TCR_cat.refined.vdjca:md5,e10a10bb7f43d2187077b339e46f453e"
                 ]
             ]
         ],
-        "timestamp": "2024-01-19T22:53:00.69885"
+        "timestamp": "2024-01-22T14:52:37.872711"
     },
     "vdjca": {
         "content": [
@@ -66,11 +66,11 @@
                     {
                         "id": "TCR_cat"
                     },
-                    "TCR_cat_non_refined.vdjca:md5,79ec9f9d0e8ec7154c30f1e5638eb5ae"
+                    "TCR_cat_non_refined.vdjca:md5,034d4baeb7a499352092d59c4479f14f"
                 ]
             ]
         ],
-        "timestamp": "2024-01-19T22:53:01.369715"
+        "timestamp": "2024-01-22T14:52:38.1949"
     },
     "qc_json": {
         "content": [
@@ -92,11 +92,11 @@
                     {
                         "id": "TCR_cat"
                     },
-                    "TCR_cat.align.report.json:md5,de0fe5e181784dfe4b9fe6ca6e3d4e3c"
+                    "TCR_cat.align.report.json:md5,3920a6b8ae8ed41f0d29c3a9a4a45e63"
                 ]
             ]
         ],
-        "timestamp": "2024-01-19T22:52:59.976085"
+        "timestamp": "2024-01-22T14:52:37.665216"
     },
     "assemble_report_json": {
         "content": [

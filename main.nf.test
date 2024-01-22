@@ -2,7 +2,6 @@ nextflow_pipeline {
 
     name "Test Workflow NF-MIXCR"
     script "main.nf"
-    config "configs/test_mixcr-nf.config"
 
     tag "mixcr"
     tag "mixcr_pipeline"
