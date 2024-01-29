@@ -1,8 +1,9 @@
 process MIXCR_EXPORTREPORTS {
+    tag "$meta.id"
     container 'ghcr.io/milaboratory/mixcr/mixcr:4.6.0'
 
     input:
-    tuple val(id), path(clns)
+    tuple val(meta), path(clns)
     path(library)
 
     output:
@@ -12,11 +13,11 @@ process MIXCR_EXPORTREPORTS {
 
     script:
     def args   = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: id
+    def prefix = task.ext.prefix ?: meta.id
 
     """
-    mixcr exportReports --json $clns ${id}.report.json
-    mixcr exportReports $clns ${id}.report.txt
+    mixcr exportReports --json $clns ${prefix}.report.json
+    mixcr exportReports $clns ${prefix}.report.txt
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -27,8 +28,8 @@ process MIXCR_EXPORTREPORTS {
     stub:
     def prefix = task.ext.prefix ?: id
     """
-    touch ${id}.report.json
-    touch ${id}.report.txt
+    touch ${prefix}.report.json
+    touch ${prefix}.report.txt
 
     cat <<-END_VERSIONS > versions.yml
     MIXCR_ANALYZE:

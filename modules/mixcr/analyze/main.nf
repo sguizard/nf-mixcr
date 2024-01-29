@@ -1,11 +1,11 @@
 process MIXCR_ANALYZE {
-    tag "$id"
+    tag "$meta.id"
 
     container 'ghcr.io/milaboratory/mixcr/mixcr:4.6.0'
     // container 'https://github.com/sguizard/mixcr-singularity-container/blob/master/mixcr.sif'
 
     input:
-    tuple val(meta), path(reads)
+    tuple val(meta), path(r1), path(r2)
     val(preset)
     path(library)
 
@@ -29,9 +29,7 @@ process MIXCR_ANALYZE {
     def args   = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: meta.id
     def lib    = library.toString() == 'NO_FILE' ? '' : "--library ${library}"
-    lib.replaceFirst('.json.gz', '')
-    def r1     = reads[0]
-    def r2     = reads[1]
+    lib = lib.replaceFirst('.json.gz', '')
 
     """
     mixcr analyze \\
@@ -41,7 +39,7 @@ process MIXCR_ANALYZE {
         --threads ${task.cpus} \\
         $r1 \\
         $r2 \\
-        ${meta.id} > ${prefix}.log
+        ${prefix} > ${prefix}.log
 
     mv ${prefix}.vdjca ${prefix}_non_refined.vdjca
 

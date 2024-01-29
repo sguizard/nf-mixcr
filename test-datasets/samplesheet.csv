@@ -1,0 +1,2 @@
+id,read1,read2
+CAT1,./test-datasets/23570MA0002L01_1_20k.fastq.gz,./test-datasets/23570MA0002L01_2_20k.fastq.gz
