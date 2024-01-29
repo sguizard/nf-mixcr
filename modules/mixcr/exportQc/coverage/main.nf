@@ -1,8 +1,9 @@
 process MIXCR_EXPORTQC_COVERAGE {
+    tag "$meta.id"
     container 'ghcr.io/milaboratory/mixcr/mixcr:4.6.0'
 
     input:
-    tuple val(id), path(vdjca)
+    tuple val(meta), path(vdjca)
     path(library)
 
     output:
@@ -12,11 +13,11 @@ process MIXCR_EXPORTQC_COVERAGE {
 
     script:
     def args   = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: id
+    def prefix = task.ext.prefix ?: meta.id
 
     """
-    mixcr exportQc coverage $vdjca ${id}_exportQC_coverage.pdf
-    mixcr exportQc coverage $vdjca ${id}_exportQC_coverage.png
+    mixcr exportQc coverage $vdjca ${prefix}_exportQC_coverage.pdf
+    mixcr exportQc coverage $vdjca ${prefix}_exportQC_coverage.png
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -25,10 +26,10 @@ process MIXCR_EXPORTQC_COVERAGE {
     """
 
     stub:
-    def prefix = task.ext.prefix ?: id
+    def prefix = task.ext.prefix ?: meta.id
     """
-    touch ${id}_exportQC_coverage_R1.pdf
-    touch ${id}_exportQC_coverage_R1.png
+    touch ${prefix}_exportQC_coverage_R1.pdf
+    touch ${prefix}_exportQC_coverage_R1.png
 
     cat <<-END_VERSIONS > versions.yml
     MIXCR_ANALYZE:

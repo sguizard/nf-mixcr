@@ -1,9 +1,10 @@
 process MIXCR_EXPORTQC_CHAINUSAGE {
+    tag "$study"
     container 'ghcr.io/milaboratory/mixcr/mixcr:4.6.0'
 
     input:
     val(study) 
-    tuple val(id), path(clns)
+    tuple val(meta), path(clns)
     path(library)
 
     output:
@@ -13,7 +14,7 @@ process MIXCR_EXPORTQC_CHAINUSAGE {
 
     script:
     def args   = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: id
+    def prefix = task.ext.prefix ?: meta.id
 
     """
     mixcr exportQc chainUsage *.clns ${study}_exportQC_chainUsage.pdf
