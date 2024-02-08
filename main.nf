@@ -31,7 +31,7 @@ def printLabVal (String lab, List val) {
 
 // Run INFO
 println ""
-println "= RUN INFO ==========================="
+println "= 📄 RUN INFO ========================="
 printLabVal("Command Line", workflow.commandLine)
 printLabVal("Config Files", workflow.configFiles)
 printLabVal("Profile"     , workflow.profile)
@@ -46,7 +46,7 @@ println ""
 
 // Summarize parameters
 println ""
-println "= PARAMETERS ========================="
+println "= ⚙️  PARAMETERS ======================="
 printLabVal("Samplesheet", params.samplesheet)
 printLabVal("Preset"     , params.preset)
 printLabVal("Library"    , params.library)
@@ -58,6 +58,8 @@ println ""
 // Set up Channels
 ch_library = Channel.fromPath(params.library)
 
+println ""
+println "= 🏃 PIPELINE RUNNING ================"
 workflow {
     // Check and prepare input channel
     SAMPLESHEET_CHECK(params.samplesheet)
@@ -76,3 +78,16 @@ workflow {
     // Export reports
     MIXCR_EXPORTREPORTS(MIXCR_ANALYZE.out.clns, ch_library)
 }
+
+workflow.onComplete {
+    println "======================================"
+    println ""
+
+    println ""
+    println "= ✅ PIPELINE COMPLETED =============="
+    println "Completed at: ${workflow.complete}"
+    println "Duration    : ${workflow.duration}"
+    println "======================================"
+
+}
+
