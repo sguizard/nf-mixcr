@@ -23,12 +23,14 @@ def printOptions (option, val) {
 }
 
 // Summarize parameters
+println ""
 println "= PARAMETERS ========================="
 printOptions("samplesheet", params.samplesheet)
 printOptions("preset"     , params.preset)
 printOptions("library"    , params.library)
 printOptions("study"      , params.study)
 println "======================================"
+println ""
 
 // Set up Channels
 ch_library = Channel.fromPath(params.library)
