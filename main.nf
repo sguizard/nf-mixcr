@@ -18,19 +18,42 @@ include { MIXCR_EXPORTQC_TAGS       } from './modules/mixcr/exportQc/tags'
 include { MIXCR_EXPORTREPORTS       } from './modules/mixcr/exportReports'
 
 // Utils functions
-def printOptions (option, val) {
-    println "PARAMS: $option = $val" 
+def printLabVal (String lab, val) {
+    spacer = " ".repeat(12 - lab.length())
+    println "$lab$spacer = $val" 
 }
+
+def printLabVal (String lab, List val) {
+    spacer = " ".repeat(12 - lab.length())
+    val.each { println "$lab$spacer = $it" }
+}
+
+
+// Run INFO
+println ""
+println "= RUN INFO ==========================="
+printLabVal("Command Line", workflow.commandLine)
+printLabVal("Config Files", workflow.configFiles)
+printLabVal("Profile"     , workflow.profile)
+printLabVal("Revision"    , workflow.revision)
+printLabVal("RunName"     , workflow.runName)
+printLabVal("LaunchDir"   , workflow.launchDir)
+printLabVal("WorkDir"     , workflow.workDir)
+printLabVal("Start"       , workflow.start)
+println "======================================"
+println ""
+
 
 // Summarize parameters
 println ""
 println "= PARAMETERS ========================="
-printOptions("samplesheet", params.samplesheet)
-printOptions("preset"     , params.preset)
-printOptions("library"    , params.library)
-printOptions("study"      , params.study)
+printLabVal("Samplesheet", params.samplesheet)
+printLabVal("Preset"     , params.preset)
+printLabVal("Library"    , params.library)
+printLabVal("Study"      , params.study)
 println "======================================"
 println ""
+
 
 // Set up Channels
 ch_library = Channel.fromPath(params.library)
