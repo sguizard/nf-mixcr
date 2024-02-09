@@ -1,9 +1,9 @@
-# nf-mixcr: TCR repertoire building with MiCXR
+# nf-mixcr: TCR repertoire building with MiXCR
 
-nf-mixcr is nextflow pipeline running mixcr to build T-cell repertoire from illumina sequencing.
-Nextflow makes your life easier by managing for you the input files, output files and jobs for you without having to install any program apart Nextflow itself.
+`nf-mixcr` is nextflow pipeline running MiXCR to build T-cell repertoire from illumina sequencing.
+Nextflow makes your life easier by managing for you the input files, output files and jobs without having to install any program apart Nextflow itself and a container runner (singularity or docker).
 
-The pipeline run the `mixcr analyze` program on all reads files placed in an input directory and the generates the QC and clones tables automatically.
+The pipeline run the `mixcr analyze` program on each reads pairs placed listed in a samplesheet file, generates the QC and clones tables automatically.
 
 ```mermaid
 flowchart TD
@@ -20,9 +20,9 @@ flowchart TD
 ## Requirements
 **NB:** I assume you have a minimal knowledge of terminal and bash and you'll be able to run the following lines.
 
-nf-mixcr analyze does not require lot of dependencies to run.
+`nf-mixcr` does not require lot of dependencies to run.
 If you plan running it on a cluster (like Eddie), there's big chances you do not need install anything.
-The only dependencies are: 
+The only dependencies are:
 - [Nextflow](https://www.nextflow.io/)
 - [Docker](https://docs.docker.com/get-docker/) or [Singularity](https://sylabs.io/singularity/)
 - [MixCr](https://mixcr.com/) (for only for activation!)
@@ -35,7 +35,7 @@ conda install -c milaboratories nextflow singularity mixcr
 ```
 
 ### MiXCR (once for licence activation)
-Before going futher, you will need a licence for using `mixcr`. 
+Before going futher, you will need a licence for using MiXCR.
 If you don't have one, please visit this [page](https://mixcr.com/mixcr/getting-started/milm/) and fill in the form.
 If your an academic, lucky you, it's free! If you're not, please check the commercial licensing page.
 Once you received your licence, please run the command `mixcr activate-license` and copy paste your licence key.
@@ -46,10 +46,9 @@ Once you received your licence, please run the command `mixcr activate-license` 
 **NOPE!** 🎉
 
 But first, let's check if the pipeline is running correctly.
-It use profiles to set a series of parameters.
 The test profile can be use to run to the pipeline with toy dataset automatically downloaded from the repository.
 
-You start the test by running:
+You can start the test by running:
 ```
 nextflow run sguizard/nf-mixcr -profile singularity,test
 ```
