@@ -97,6 +97,7 @@ printLabVal("Samplesheet", params.samplesheet)
 printLabVal("Preset"     , params.preset)
 printLabVal("Library"    , params.library)
 printLabVal("Study"      , params.study)
+printLabVal("Outdir"     , params.outdir)
 println "======================================"
 println ""
 
