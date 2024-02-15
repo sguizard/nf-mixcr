@@ -33,7 +33,7 @@ process MIXCR_ANALYZE {
     lib = lib.replaceFirst('.json.gz', '')
 
     """
-    export MI_LICENSE_FILE="$(PWD)/${license}"
+    export MI_LICENSE_FILE="$PWD/${license}"
 
     mixcr analyze \\
         $preset \\
