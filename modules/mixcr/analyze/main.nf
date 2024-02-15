@@ -35,6 +35,8 @@ process MIXCR_ANALYZE {
     """
     export MI_LICENSE_FILE="$PWD/${license}"
 
+    echo $MI_LICENSE_FILE
+
     mixcr analyze \\
         $preset \\
         $args \\
