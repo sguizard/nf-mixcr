@@ -38,8 +38,7 @@ def printConfHelp () {
     You just hit a small error and we will work togehter to fix it ⚒️. 
     Mixcr is nice tool, but too big tool to implement all options it offers (and I'm too lazy for that 😪). 
     In order to configure mixcr analyze parameters you need a custom configuration file. 
-    You can download a template one from this address: https://raw.githubusercontent.com/sguizard/nf-mixcr/dev/configs/mixcr_analyze_template.config. 
-    Save it on your computer and rename it mixcr_analyze.config. 
+    You can get a template by running the pipeline with --get_ma_conf option. 
     Open it with your favorite editor and edit the lines with your own information. 
     If you wish to add an option, add a newline with your option and its argument between simple quote and with a comma at the end. 
     Then re run the pipeline and add the following option '-c mixcr_analyze.config'.
@@ -65,6 +64,24 @@ def checkMixcrAnalyzeConf (List confs) {
         System.exit(0)
     }
 }
+
+def getMixcrAnalyzeConf() {
+    cmd = 'wget https://raw.githubusercontent.com/sguizard/nf-mixcr/dev/configs/mixcr_analyze_template.config'
+    cmd.execute()
+    cmd = 'mv mixcr_analyze_template.config mixcr_analyze.config'
+    cmd.execute()
+    
+    println """
+    📦 Package delivered!
+
+    (mixcr_analyze_template.config pulled from Github repo and renamed into mixcr_analyze.config)"
+    """
+    System.exit(0)
+}
+
+
+// Does the user need a copy of mixcr analysis config file? 
+if (params.get_ma_conf) { getMixcrAnalyzeConf() }
 
 
 // Checking mandatory parameters
