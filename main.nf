@@ -71,6 +71,7 @@ def checkMixcrAnalyzeConf (List confs) {
 def error_message = []
 if (params.samplesheet == null) { error_message.add("ERROR: --samplesheet mandatory parameter is missing") }
 if (params.preset      == null) { error_message.add("ERROR: --preset mandatory parameter is missing"     ) }
+if (params.license     == null) { error_message.add("ERROR: --license mandatory parameter is missing"     ) }
 
 if (error_message) {println error_message.join('\n'); System.exit(0) }
 
@@ -93,6 +94,7 @@ println ""
 // Summarize parameters
 println ""
 println "= ⚙️  PARAMETERS ======================="
+printLabVal("License"    , params.license)
 printLabVal("Samplesheet", params.samplesheet)
 printLabVal("Preset"     , params.preset)
 printLabVal("Library"    , params.library)
@@ -112,6 +114,7 @@ println ""
 
 // Set up Channels
 ch_library = Channel.fromPath(params.library)
+ch_license = Channel.fromPath(params.license)
 
 
 println ""
@@ -121,7 +124,7 @@ workflow {
     SAMPLESHEET_CHECK(params.samplesheet)
 
     // Run Mixcr analysis
-    MIXCR_ANALYZE(SAMPLESHEET_CHECK.out.mixcr_input, params.preset, ch_library)
+    MIXCR_ANALYZE(SAMPLESHEET_CHECK.out.mixcr_input, params.preset, ch_library, ch_license)
 
     // Export assembled clone list
     MIXCR_EXPORTCLONES(MIXCR_ANALYZE.out.clns, ch_library)

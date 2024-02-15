@@ -8,6 +8,7 @@ process MIXCR_ANALYZE {
     tuple val(meta), path(r1), path(r2)
     val(preset)
     path(library)
+    path(license)
 
     output:
     tuple val(meta), path("*.align.report.json")   , emit: align_report_json
@@ -32,6 +33,8 @@ process MIXCR_ANALYZE {
     lib = lib.replaceFirst('.json.gz', '')
 
     """
+    export MI_LICENSE_FILE="$(PWD)/${license}"
+
     mixcr analyze \\
         $preset \\
         $args \\
