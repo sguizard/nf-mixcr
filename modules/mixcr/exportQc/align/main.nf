@@ -4,7 +4,7 @@ process MIXCR_EXPORTQC_ALIGN {
 
     input:
     val(study) 
-    tuple val(meta), path(clns)
+    path(clns)
     path(library)
 
     output:
@@ -14,7 +14,6 @@ process MIXCR_EXPORTQC_ALIGN {
 
     script:
     def args   = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: meta.id
 
     """
     mixcr exportQc align *.clns ${study}_exportQC_align.pdf
@@ -27,7 +26,6 @@ process MIXCR_EXPORTQC_ALIGN {
     """
 
     stub:
-    def prefix = task.ext.prefix ?: id
     """
     touch ${study}_exportQC_align.pdf
     touch ${study}_exportQC_align.png

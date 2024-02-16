@@ -128,6 +128,7 @@ println ""
 // Set up Channels
 ch_preset  = Channel.value(params.preset)
 ch_library = Channel.value(file(params.library))
+ch_study   = Channel.value(params.study)
 
 
 println ""
@@ -142,10 +143,15 @@ workflow {
     // Export assembled clone list
     MIXCR_EXPORTCLONES(MIXCR_ANALYZE.out.clns, ch_library)
 
+    ch_all_clns = 
+        MIXCR_ANALYZE.out.clns
+        .map { [it[1]] }
+        .collect()
+
     // Export QCs
-    MIXCR_EXPORTQC_ALIGN(params.study, MIXCR_ANALYZE.out.clns.collect(), ch_library)
-    MIXCR_EXPORTQC_CHAINUSAGE(params.study, MIXCR_ANALYZE.out.clns.collect(), ch_library)
-    MIXCR_EXPORTQC_COVERAGE(MIXCR_ANALYZE.out.vdjca, ch_library)
+    MIXCR_EXPORTQC_ALIGN     (ch_study, ch_all_clns, ch_library)
+    MIXCR_EXPORTQC_CHAINUSAGE(ch_study, ch_all_clns, ch_library)
+    MIXCR_EXPORTQC_COVERAGE  (MIXCR_ANALYZE.out.vdjca                   , ch_library)
 
     // Export reports
     MIXCR_EXPORTREPORTS(MIXCR_ANALYZE.out.clns, ch_library)

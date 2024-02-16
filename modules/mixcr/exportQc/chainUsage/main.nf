@@ -4,7 +4,7 @@ process MIXCR_EXPORTQC_CHAINUSAGE {
 
     input:
     val(study) 
-    tuple val(meta), path(clns)
+    path(clns)
     path(library)
 
     output:
@@ -14,7 +14,6 @@ process MIXCR_EXPORTQC_CHAINUSAGE {
 
     script:
     def args   = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: meta.id
 
     """
     mixcr exportQc chainUsage *.clns ${study}_exportQC_chainUsage.pdf
@@ -27,7 +26,6 @@ process MIXCR_EXPORTQC_CHAINUSAGE {
     """
 
     stub:
-    def prefix = task.ext.prefix ?: id
     """
     touch ${study}_exportQC_chainUsage.pdf
     touch ${study}_exportQC_chainUsage.png
