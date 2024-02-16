@@ -51,7 +51,7 @@ def checkMixcrAnalyzeConf (List confs) {
     def isT = isTestProfile(workflow.profile)
 
     confs.each {
-        if (it.getFileName() == "mixcr_analyze.config") { ok = true }
+        if (it.getFileName() =~ "mixcr_analyze.config") { ok = true }
     }
     
     if      (!isT &&  ok) { println "Regular Run: mixcr_analyze.config ✅" }
@@ -66,9 +66,7 @@ def checkMixcrAnalyzeConf (List confs) {
 }
 
 def getMixcrAnalyzeConf() {
-    cmd = 'wget https://raw.githubusercontent.com/sguizard/nf-mixcr/dev/configs/mixcr_analyze_template.config'
-    cmd.execute()
-    cmd = 'mv mixcr_analyze_template.config mixcr_analyze.config'
+    cmd = 'wget -O mixcr_analyze.config https://raw.githubusercontent.com/sguizard/nf-mixcr/dev/configs/mixcr_analyze_template.config'
     cmd.execute()
     
     println """
@@ -128,7 +126,8 @@ println ""
 
 
 // Set up Channels
-ch_library = Channel.fromPath(params.library)
+ch_preset  = Channel.value(params.preset)
+ch_library = Channel.value(file(params.library))
 
 
 println ""
@@ -138,7 +137,7 @@ workflow {
     SAMPLESHEET_CHECK(params.samplesheet)
 
     // Run Mixcr analysis
-    MIXCR_ANALYZE(SAMPLESHEET_CHECK.out.mixcr_input, params.preset, ch_library)
+    MIXCR_ANALYZE(SAMPLESHEET_CHECK.out.mixcr_input, ch_preset, ch_library)
 
     // Export assembled clone list
     MIXCR_EXPORTCLONES(MIXCR_ANALYZE.out.clns, ch_library)
