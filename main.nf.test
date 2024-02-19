@@ -1,0 +1,25 @@
+nextflow_pipeline {
+
+    name "Test Workflow NF-MIXCR"
+    script "main.nf"
+
+    tag "mixcr"
+    tag "mixcr_pipeline"
+
+    test("Main test") {
+
+        when {
+            params {
+                input_dir = "test-datasets"
+                preset    = "generic-amplicon-with-umi"
+                library   = "imgt.202312-3.sv8.json.gz"
+            }
+        }
+
+        then {
+            assert workflow.success
+        }
+
+    }
+
+}

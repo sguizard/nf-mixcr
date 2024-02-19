@@ -1,0 +1,6 @@
+/.nextflow*
+/.nf-test
+/.nf-test.log
+/.vscode
+/work
+/results

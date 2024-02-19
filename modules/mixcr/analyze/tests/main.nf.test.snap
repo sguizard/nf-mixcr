@@ -1,0 +1,127 @@
+{
+    "clns": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TCR_cat"
+                    },
+                    "TCR_cat.clns:md5,f1f97ee142075579df3f1133d0f6d81d"
+                ]
+            ]
+        ],
+        "timestamp": "2024-01-22T14:52:37.719662"
+    },
+    "qc_txt": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TCR_cat"
+                    },
+                    "TCR_cat.qc.txt:md5,ad6c525b66ff49fb038c3af03ca033ba"
+                ]
+            ]
+        ],
+        "timestamp": "2024-01-19T22:53:00.553265"
+    },
+    "clones_TRB_tsv": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TCR_cat"
+                    },
+                    "TCR_cat.clones_TRB.tsv:md5,cd23934a15f41111c0e1bd580bfbed4d"
+                ]
+            ]
+        ],
+        "timestamp": "2024-01-19T22:53:00.296818"
+    },
+    "versions": {
+        "content": [
+            [
+                "versions.yml:md5,e803181bdeacebae68ee9a0c5d40ae5f"
+            ]
+        ],
+        "timestamp": "2024-01-19T22:53:01.820397"
+    },
+    "refined_vdjca": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TCR_cat"
+                    },
+                    "TCR_cat.refined.vdjca:md5,e10a10bb7f43d2187077b339e46f453e"
+                ]
+            ]
+        ],
+        "timestamp": "2024-01-22T14:52:37.872711"
+    },
+    "vdjca": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TCR_cat"
+                    },
+                    "TCR_cat_non_refined.vdjca:md5,034d4baeb7a499352092d59c4479f14f"
+                ]
+            ]
+        ],
+        "timestamp": "2024-01-22T14:52:38.1949"
+    },
+    "qc_json": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TCR_cat"
+                    },
+                    "TCR_cat.qc.json:md5,429f9adc170ee40d1de86cb15d122a0f"
+                ]
+            ]
+        ],
+        "timestamp": "2024-01-19T22:53:00.42199"
+    },
+    "align_report_json": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TCR_cat"
+                    },
+                    "TCR_cat.align.report.json:md5,3920a6b8ae8ed41f0d29c3a9a4a45e63"
+                ]
+            ]
+        ],
+        "timestamp": "2024-01-22T14:52:37.665216"
+    },
+    "assemble_report_json": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TCR_cat"
+                    },
+                    "TCR_cat.assemble.report.json:md5,67ab3fa3f67f250fe8ff4425b22d73f9"
+                ]
+            ]
+        ],
+        "timestamp": "2024-01-19T22:53:00.118448"
+    },
+    "refine_report_json": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TCR_cat"
+                    },
+                    "TCR_cat.refine.report.json:md5,8d87a511de01ed5d06ca8c679b7c774b"
+                ]
+            ]
+        ],
+        "timestamp": "2024-01-19T22:53:01.096971"
+    }
+}

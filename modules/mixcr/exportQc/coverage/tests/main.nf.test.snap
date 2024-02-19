@@ -1,0 +1,35 @@
+{
+    "MIXCR_EXPORTQC_COVERAGE Compute coverage QC": {
+        "content": [
+            {
+                "0": [
+                    "[id:TCR_cat]_exportQC_coverage.pdf:md5,8cbbc6bad4714436bbb60af9df4adc20"
+                ],
+                "1": [
+                    [
+                        "[id:TCR_cat]_exportQC_coverage_R0.png:md5,5bef3e151e35e5ea576d93c15a123478",
+                        "[id:TCR_cat]_exportQC_coverage_R1.png:md5,88017b1a273738d139c66d24c4787b7b",
+                        "[id:TCR_cat]_exportQC_coverage_R2.png:md5,cefaa24a538f22240905e6f53e5956a5"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,de43f6f76d4e6e6df112b27e04aebc03"
+                ],
+                "qc_coverage_pdf": [
+                    "[id:TCR_cat]_exportQC_coverage.pdf:md5,8cbbc6bad4714436bbb60af9df4adc20"
+                ],
+                "qc_coverage_png": [
+                    [
+                        "[id:TCR_cat]_exportQC_coverage_R0.png:md5,5bef3e151e35e5ea576d93c15a123478",
+                        "[id:TCR_cat]_exportQC_coverage_R1.png:md5,88017b1a273738d139c66d24c4787b7b",
+                        "[id:TCR_cat]_exportQC_coverage_R2.png:md5,cefaa24a538f22240905e6f53e5956a5"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,de43f6f76d4e6e6df112b27e04aebc03"
+                ]
+            }
+        ],
+        "timestamp": "2024-01-22T14:55:01.203987"
+    }
+}
