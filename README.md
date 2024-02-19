@@ -6,6 +6,10 @@ Nextflow makes your life easier by managing for you the input files, output file
 The pipeline run the `mixcr analyze` program on each reads pairs placed listed in a samplesheet file, generates the QC and clones tables automatically.
 
 ```mermaid
+mermaidAPI.initialize({
+    securityLevel: 'loose'
+});
+
 flowchart TD
     A(Samplesheet) --> B[Mixcr Analyze]
     B[Samplesheet Check] -->|on each sample| C[Mixcr Analyze]
