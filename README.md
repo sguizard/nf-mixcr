@@ -18,6 +18,10 @@ flowchart TD
     C -->|on all sample| F[<a href='https://mixcr.com/mixcr/reference/mixcr-exportQc'>mixcr exportQC chainusage</a>]
     C -->|on each sample| G[<a href='https://mixcr.com/mixcr/reference/mixcr-exportQc'>mixcr exportQC coverage</a>]
     C -->|on each sample| H[mixcr export report]
+
+    click E "https://mixcr.com/mixcr/reference/mixcr-exportQc" _blank
+    click F "https://mixcr.com/mixcr/reference/mixcr-exportQc" _blank
+    click G "https://mixcr.com/mixcr/reference/mixcr-exportQc" _blank
 ```
 
 
