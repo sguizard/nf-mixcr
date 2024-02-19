@@ -274,7 +274,7 @@ The execution timeline display the running time and order in which jobs have bee
 
 The execution trace report gather the raw data about job execution (included job running directory in work directory).
 
-## Tips and Troubleshooting know problems
+## Tips and Troubleshooting known problems
 
 ### Roslin Institute users: Fix eddie config
 
@@ -302,7 +302,7 @@ This is obviously a temporary fix. Discussions are running at the Roslin Institu
 
 **NB:** You will need to apply the next fix too.
 
-### Corret MiXCR license detection
+### Correct MiXCR license detection
 
 To being sure that MiXCR can correctly access to your license, you should update the singularity `-B` option by adding this following lines into a custom configuration file (eddie_fix.config for example 😜).
 
