@@ -1,4 +1,5 @@
 # nf-mixcr: TCR repertoire building with MiXCR
+[![DOI](https://zenodo.org/badge/741817997.svg)](https://zenodo.org/doi/10.5281/zenodo.10678866)
 
 `nf-mixcr` is nextflow pipeline running MiXCR to build T-cell repertoire from illumina sequencing.
 Nextflow makes your life easier by managing for you the input files, output files and jobs without having to install any program apart Nextflow itself and a container runner (singularity or docker).
@@ -330,6 +331,13 @@ nextflow run sguizard/nf-mixcr \
 ## Contributing
 
 Contributions are welcome! Just try to following the code formatting the best as you can.
+
+
+## Citation
+Please cite my work if you use it in own research, thanks! 🙏
+
+Sébastien Guizard. (2024). sguizard/nf-mixcr: nf-mixcr v1.0.1 (v1.0.1). Zenodo. https://doi.org/10.5281/zenodo.10678867
+
 
 ## Footnotes
 
