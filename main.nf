@@ -125,7 +125,7 @@ println "======================================"
 println ""
 
 
-// Set up Channels
+// Set up Channels (recycled channels)
 ch_preset  = Channel.value(params.preset)
 ch_library = Channel.value(file(params.library))
 ch_study   = Channel.value(params.study)
@@ -149,9 +149,9 @@ workflow {
         .collect()
 
     // Export QCs
-    MIXCR_EXPORTQC_ALIGN     (ch_study, ch_all_clns, ch_library)
-    MIXCR_EXPORTQC_CHAINUSAGE(ch_study, ch_all_clns, ch_library)
-    MIXCR_EXPORTQC_COVERAGE  (MIXCR_ANALYZE.out.vdjca                   , ch_library)
+    MIXCR_EXPORTQC_ALIGN     (ch_study, ch_all_clns  , ch_library)
+    MIXCR_EXPORTQC_CHAINUSAGE(ch_study, ch_all_clns  , ch_library)
+    MIXCR_EXPORTQC_COVERAGE  (MIXCR_ANALYZE.out.vdjca, ch_library)
 
     // Export reports
     MIXCR_EXPORTREPORTS(MIXCR_ANALYZE.out.clns, ch_library)
