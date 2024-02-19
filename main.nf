@@ -161,8 +161,11 @@ workflow.onComplete {
     println "======================================"
     println ""
 
+    success = workflow.success ? '✅' : '❌'
+
     println ""
-    println "= ✅ PIPELINE COMPLETED =============="
+    println "= ${success} PIPELINE COMPLETED =============="
+    println "Started at  : ${workflow.start}"
     println "Completed at: ${workflow.complete}"
     println "Duration    : ${workflow.duration}"
     println "======================================"
