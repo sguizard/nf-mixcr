@@ -10,9 +10,9 @@ flowchart TD
     A(Samplesheet) --> B[Mixcr Analyze]
     B[Samplesheet Check] -->|on each sample| C[Mixcr Analyze]
     C -->|on each sample| D[mixcr exportclones]
-    C -->|on all sample| E[<a href="https://mixcr.com/mixcr/reference/mixcr-exportQc">mixcr exportQC align</a>]
-    C -->|on all sample| F[<a href="https://mixcr.com/mixcr/reference/mixcr-exportQc">mixcr exportQC chainusage</a>]
-    C -->|on each sample| G[<a href="https://mixcr.com/mixcr/reference/mixcr-exportQc">mixcr exportQC coverage</a>]
+    C -->|on all sample| E[<a href='https://mixcr.com/mixcr/reference/mixcr-exportQc'>mixcr exportQC align</a>]
+    C -->|on all sample| F[<a href='https://mixcr.com/mixcr/reference/mixcr-exportQc'>mixcr exportQC chainusage</a>]
+    C -->|on each sample| G[<a href='https://mixcr.com/mixcr/reference/mixcr-exportQc'>mixcr exportQC coverage</a>]
     C -->|on each sample| H[mixcr export report]
 ```
 
