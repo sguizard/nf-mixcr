@@ -39,7 +39,7 @@ The only dependencies are:
 
 My advice for installation is to use [conda (Miniforge)](https://github.com/conda-forge/miniforge) package manager.
 
-```
+```bash
 conda create -n nf-mixcr_env
 conda activate nf-mixcr_env
 conda install -c milaboratories nextflow singularity mixcr
@@ -61,13 +61,13 @@ The test profile can be use to run to the pipeline with toy datasets automatical
 
 You can start the test by running:
 
-```
+```bash
 nextflow run sguizard/nf-mixcr -profile singularity,test,<Institution>
 ```
 
 or if you use docker in place of singularity:
 
-```
+```bash
 nextflow run sguizard/nf-mixcr -profile docker,test,<Institution>
 ```
 
@@ -79,7 +79,7 @@ The <Institution> place holder must be replaced by your cluster profile. The lis
 
 To keep files sorted between inputs, outputs and working directories, I start by creating a directory for the analysis (TCR_project) and create a data directory where I store the reads and other inputs files:
 
-```
+```txt
 TCR_project/
 └── data
     ├── imgt.202312-3.sv8.json.gz
@@ -93,7 +93,7 @@ TCR_project/
 
 A sampleesheet must be provided. This file is a three columns comma-separated value table. The columns are `id`, `read1`, `read2` and each value must be separated by a comma. Each line gives the location of the fastq file associated with a unique ID.
 
-```
+```csv
 id,read1,read2
 SAMP1,./data/read_1.fastq.gz,./data/read_2.fastq.gz
 ```
@@ -108,7 +108,7 @@ MiXCR gather multiple tools and each of them are highly configurable. Implementi
 
 Each line between the central square brackets is a `mixcr analyze` option. If needed, you can add options by inserting a new line at the end of the option, write your option between **simple quotes** and ending the line with a **comma**.
 
-```
+```txt
 process {
     withName: MIXCR_ANALYZE {
         cpus = 8
@@ -130,7 +130,7 @@ process {
 
 The classical command line to run the pipeline looks like this:
 
-```
+```bash
 nextflow run sguizard/nf-mixcr \
     -profile <Institution> \
     -c data/mixcr_analyze.config \
@@ -172,7 +172,7 @@ The **compulsory** options are:
 
 The results of the pipeline will be stored in the directory defined by the `--outdir` option. For each process/program, one directory will be created to store the results. An additional directory, `pipeline_info`, gather reports about pipeline execution.
 
-```
+```txt
 <outdir name>/
 |-- 01_mixcr_analysis
 |-- 02_mixcr_exportClones
@@ -185,7 +185,7 @@ The results of the pipeline will be stored in the directory defined by the `--ou
 
 ### 01_mixcr_analysis
 
-```
+```txt
 01_mixcr_analysis
 |-- SAMP1.align.report.json
 |-- SAMP1.align.report.txt
@@ -206,7 +206,7 @@ This directory gather the results of the programs launched by MiXCR. With the pr
 
 ### 02_mixcr_exportClones
 
-```
+```txt
 02_mixcr_exportClones
 `-- SAMP1_exportClones_<TRB/IGL>.tsv
 ```
@@ -215,7 +215,7 @@ This directory gather the results of the programs launched by MiXCR. With the pr
 
 ### 03_mixcr_exportQc_align
 
-```
+```txt
 03_mixcr_exportQc_align
 |-- TCR_exportQC_align.pdf
 `-- TCR_exportQC_align.png
@@ -226,7 +226,7 @@ It describes the reads status (correctly/incorrectly align).
 
 ### 03_mixcr_exportQc_chainusage
 
-```
+```txt
 03_mixcr_exportQc_chainusage
 |-- TCR_exportQC_chainUsage.pdf
 `-- TCR_exportQC_chainUsage.png
@@ -236,7 +236,7 @@ Exports chain usage summary of each sample.
 
 ### 03_mixcr_exportQc_coverage
 
-```
+```txt
 03_mixcr_exportQc_coverage
 |-- SAMP1_exportQC_coverage.pdf
 |-- SAMP1_exportQC_coverage_R0.png
@@ -248,7 +248,7 @@ Exports anchor points coverage by the library. It separately plots coverage for 
 
 ### 04_mixcr_exportReports
 
-```
+```txt
 04_mixcr_exportReports
 |-- SAMP1.report.json
 `-- SAMP1.report.txt
@@ -258,7 +258,7 @@ These files contains the report of each tool launched by `mixcr analyze`.
 
 ### pipeline_info
 
-```
+```txt
 pipeline_info
 |-- <timestamp>_execution_report.html
 |-- <timestamp>_execution_timeline.html
@@ -284,7 +284,7 @@ This error is caused by the permission of the `/exports/igmm/eddie/Bioinformatic
 
 In order to fix this, you can create an `eddie_fix.confg` file and add the following lines to it:
 
-```
+```txt
 singularity {
   envWhitelist = "SINGULARITY_TMPDIR,TMPDIR"
   runOptions = '-p -B "$TMPDIR"'
@@ -305,13 +305,27 @@ This is obviously a temporary fix. Discussions are running at the Roslin Institu
 
 To being sure that MiXCR can correctly access to your license, you should update the singularity `-B` option by adding this following lines into a custom configuration file (eddie_fix.config for example 😜).
 
-```
+```txt
 singularity {
   runOptions = '-p -B "$TMPDIR",/home/<username>'
 }
 ```
 
 Do not forget to replace the <username> placeholder with yours.
+
+
+### Example command line
+
+```bash
+nextflow run sguizard/nf-mixcr \
+    -profile eddie \
+    -c data/mixcr_analyze.config \
+    -c data/eddie_fix.config \
+    --samplesheet data/samplesheet.csv \
+    --preset generic-amplicon-with-umi \
+    --library data/imgt.202312-3.sv8.json.gz \
+    --study TCR_cat_project
+```
 
 ## Contributing
 
