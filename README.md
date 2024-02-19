@@ -10,9 +10,9 @@ flowchart TD
     A(Samplesheet) --> B[Mixcr Analyze]
     B[Samplesheet Check] -->|on each sample| C[Mixcr Analyze]
     C -->|on each sample| D[mixcr exportclones]
-    C -->|on all sample| E[mixcr align]
-    C -->|on all sample| F[mixcr chainusage]
-    C -->|on each sample| G[mixcr coverage]
+    C -->|on all sample| E[<a href="https://mixcr.com/mixcr/reference/mixcr-exportQc">mixcr exportQC align</a>]
+    C -->|on all sample| F[<a href="https://mixcr.com/mixcr/reference/mixcr-exportQc">mixcr exportQC chainusage</a>]
+    C -->|on each sample| G[<a href="https://mixcr.com/mixcr/reference/mixcr-exportQc">mixcr exportQC coverage</a>]
     C -->|on each sample| H[mixcr export report]
 ```
 
@@ -25,7 +25,7 @@ If you plan running it on a cluster (like Eddie), there's big chances you do not
 The only dependencies are:
 - [Nextflow](https://www.nextflow.io/)
 - [Docker](https://docs.docker.com/get-docker/) or [Singularity](https://sylabs.io/singularity/)
-- [MixCr](https://mixcr.com/) (for only for activation!)
+- [MixCr](https://mixcr.com/) (for activation only!)
 
 My advise to install those is to use the package manager [conda (Miniforge)](https://github.com/conda-forge/miniforge).
 ```
@@ -50,14 +50,18 @@ The test profile can be use to run to the pipeline with toy dataset automaticall
 
 You can start the test by running:
 ```
-nextflow run sguizard/nf-mixcr -profile singularity,test
+nextflow run sguizard/nf-mixcr -profile singularity,test,<Institution>
 ```
 
 or if you use docker in place of singularity:
 
 ```
-nextflow run sguizard/nf-mixcr -profile docker,test
+nextflow run sguizard/nf-mixcr -profile docker,test,<Institution>
 ```
+
+The <Institution> place holder must replaced by your cluster profile. The list of available configs can be found on [nf-core website](https://nf-co.re/configs).
+
+**NB:** `singularity` or `docker` profile might be skipped if they are already defined in your institution profile. 
 
 
 ## Preparing files and data for analysis
@@ -84,7 +88,7 @@ SAMP1,./data/read_1.fastq.gz,./data/read_2.fastq.gz
 If the specie studied is different from Human (hsa) or Mouse (mmu), you'll need to provide a library of reference V, D, J, C genes. The [IMGT](https://www.imgt.org/) provides libraries for a large panel of specie which can be used with mixcr. The data can be downloaded [here](https://github.com/repseqio/library-imgt/releases). Please, don't decompress the file and keep the **`'.json.gz'`** extension.
 
 ### mixcr analyze configuration file
-Mixcr gather multiple tools and each of them are highly configurable. Implementing all mixcr options in the pipeline would be highly time consuming. As a tradeoff, I decided to make use of a configuration file to set up mixcr analyze parameters. You can find a template configuration file [here](https://github.com/sguizard/nf-mixcr/blob/0ef8ed865293ea6643b31865ab1963757a74cb34/configs/mixcr_analyze_template.config), modify it with your needs.
+Mixcr gather multiple tools and each of them are highly configurable. Implementing all mixcr options in the pipeline would be highly time consuming. As a tradeoff, I decided to make use of a configuration file to set up mixcr analyze parameters. You can find a template configuration file [here](https://github.com/sguizard/nf-mixcr/blob/0ef8ed865293ea6643b31865ab1963757a74cb34/configs/mixcr_analyze_template.config), modify it with your needs. You can also run the pipeline with the option `--get_ma_conf` to get a copy.
 
 
 Each lines between the central square brackets is a mixcr analyze option. If needed, you can add options by inserting a new line at the end of the option, write your option between **simple quotes** and ending the line with a **comma**.
@@ -99,6 +103,7 @@ process {
                 '--tag-pattern "^N{4:6}GCTCACCTTTTTCAGGTCCTC(R1:*)\\^N{4:6}GCAGTGGTATCAACGCAGAGT(UMI:TN{4}TN{4}TN{4}TCTTGGGG)(R2:*)"',
                 '--rigid-left-alignment-boundary',
                 '--floating-right-alignment-boundary J',
+                '--ADDITIONAL-OPTION and_its_value', 
             ].join(' ').trim()
         }
     }
@@ -110,7 +115,12 @@ process {
 
 The classical command line to run the pipeline looks like this:
 ```
-nextflow run sguizard/nf-mixcr -profile <singularity/docker/eddie> -c data/mixcr_analyze.config --samplesheet data/samplesheet.csv --preset generic-amplicon-with-umi
+nextflow run sguizard/nf-mixcr \
+    -profile <Institution> \
+    -c data/mixcr_analyze.config \
+    --samplesheet data/samplesheet.csv \
+    --preset generic-amplicon-with-umi \
+    --study My_project
 ```
 
 ### Options description
@@ -119,18 +129,112 @@ You will set two kind of options:
 - Pipeline options, with double dash (eg. `--samplesheet`)
 
 The nextflow options that need to be used are:
-- `-profile`: select the adhoc virtualization technology (docker or singularity) and the profile of your cluster (eg. eddie). Profiles are separated by commas (eg. docker,eddie). (**MANDATORY**)
-- ` -c`: define additional configuration. Please add the mandatory `mixcr_analyze.config` file here. (**MANDATORY**)
+- `-profile`: select the adhoc virtualization technology (docker or singularity) and the profile of your cluster (eg. eddie). Profiles are separated by commas (eg. docker,eddie).
+- ` -c`: define additional configuration. Please add the mandatory `mixcr_analyze.config` file here.
 
 The pipeline options are: 
-- `--samplesheet`: The path to the samplesheet listing samples as describe above (**MANDATORY**)
-- `--preset`: mixcr analyze preset to use. (eg. `generic-amplicon-with-umi`) (**MANDATORY**)
+- `--samplesheet`: The path to the samplesheet listing samples as describe above
+- `--preset`: mixcr analyze preset to use. (eg. `generic-amplicon-with-umi`)
 - `--library`: V, D, J, C reference genes library
-- `--study`: An ID that will be used as prefix for global report files
+- `--study`: An ID that will be used as prefix for global report files (**Default: TCR**)
+- `--outdir`: the name of the directory where the results will be publish (**Default: results**)
+- `--get_ma_conf`: Download a copy of template mixcr_analysis.config and stop
 
 
+Some option must be defined for each run and can't be omitted. The compulsory options are:
+- `-profile`
+- `-c` (mixcr_analysis.config)
+- `--samplesheet`
+- `--preset`
 
 
 ## Output files
+The results of the pipeline will will be store in the directory defined by the `--outdir` option. For each process/program, one directory will be created to store the results. An additional directory, `pipeline_info`, gather reports about pipeline execution.
+
+```
+<outdir name>/
+|-- 01_mixcr_analysis
+|-- 02_mixcr_exportClones
+|-- 03_mixcr_exportQc_align
+|-- 03_mixcr_exportQc_chainusage
+|-- 03_mixcr_exportQc_coverage
+|-- 04_mixcr_exportReports
+`-- pipeline_info
+```
+
+### 01_mixcr_analysis
+```
+01_mixcr_analysis
+|-- SAMP1.align.report.json
+|-- SAMP1.align.report.txt
+|-- SAMP1.assemble.report.json
+|-- SAMP1.assemble.report.txt
+|-- SAMP1.clns
+|-- SAMP1.clones_TRB.tsv
+|-- SAMP1.log
+|-- SAMP1_non_refined.vdjca
+|-- SAMP1.qc.json
+|-- SAMP1.qc.txt
+|-- SAMP1.refined.vdjca
+|-- SAMP1.refine.report.json
+`-- SAMP1.refine.report.txt
+```
+
+This directory gather the results of the programs launched by MiXCR. With the preset `generic-amplicon-with-umi`, `mixcr analyze align`, `mixcr analyze refineTagsAndSort`, `mixcr analyze assemble` and `mixcr analyze export` are run.
+
+
+### 02_mixcr_exportClones
+```
+02_mixcr_exportClones
+`-- SAMP1_exportClones_<TRB/IGL>.tsv
+```
+
+`mixcr exportClones` generates a tabulation separated value file listing detected clones. 
+
+
+### 03_mixcr_exportQc_align
+```
+03_mixcr_exportQc_align
+|-- TCR_exportQC_align.pdf
+`-- TCR_exportQC_align.png
+```
+
+`mixcr exportQc align` used the results of each analyzed samples to generate [align report](https://mixcr.com/mixcr/reference/report-align/).
+It describe 
+
+### 03_mixcr_exportQc_chainusage
+```
+03_mixcr_exportQc_chainusage
+|-- TCR_exportQC_chainUsage.pdf
+`-- TCR_exportQC_chainUsage.png
+```
+
+
+### 03_mixcr_exportQc_coverage
+```
+03_mixcr_exportQc_coverage
+|-- SAMP1_exportQC_coverage.pdf
+|-- SAMP1_exportQC_coverage_R0.png
+|-- SAMP1_exportQC_coverage_R1.png
+`-- SAMP1_exportQC_coverage_R2.png
+```
+
+
+### 04_mixcr_exportReports
+```
+04_mixcr_exportReports
+|-- SAMP1.report.json
+`-- SAMP1.report.txt
+```
+
+
+### pipeline_info
+```
+pipeline_info
+|-- <timestamp>_execution_report.html
+|-- <timestamp>_execution_timeline.html
+`-- <timestamp>_execution_trace.txt
+```
+
 
 TODO: Write output files
