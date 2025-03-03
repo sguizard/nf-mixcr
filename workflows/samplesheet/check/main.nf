@@ -3,7 +3,8 @@ workflow SAMPLESHEET_CHECK {
     samplesheet
 
     main: 
-    def header      = true
+    def header = true
+    def valid  = true
 
     file(samplesheet).eachLine { line ->
         // println("line ==> "+line)

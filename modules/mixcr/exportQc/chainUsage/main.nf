@@ -13,8 +13,6 @@ process MIXCR_EXPORTQC_CHAINUSAGE {
     path "versions.yml"              , emit: versions
 
     script:
-    def args   = task.ext.args ?: ''
-
     """
     mixcr exportQc chainUsage *.clns ${study}_exportQC_chainUsage.pdf
     mixcr exportQc chainUsage *.clns ${study}_exportQC_chainUsage.png

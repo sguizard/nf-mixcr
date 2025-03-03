@@ -12,7 +12,6 @@ process MIXCR_EXPORTREPORTS {
     path "versions.yml"  , emit: versions
 
     script:
-    def args   = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: meta.id
 
     """
@@ -26,7 +25,7 @@ process MIXCR_EXPORTREPORTS {
     """
 
     stub:
-    def prefix = task.ext.prefix ?: id
+    def prefix = task.ext.prefix ?: meta.id
     """
     touch ${prefix}.report.json
     touch ${prefix}.report.txt

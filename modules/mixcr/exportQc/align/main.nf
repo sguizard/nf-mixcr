@@ -13,8 +13,6 @@ process MIXCR_EXPORTQC_ALIGN {
     path "versions.yml"         , emit: versions
 
     script:
-    def args   = task.ext.args ?: ''
-
     """
     mixcr exportQc align *.clns ${study}_exportQC_align.pdf
     mixcr exportQc align *.clns ${study}_exportQC_align.png

@@ -50,7 +50,7 @@ process MIXCR_ANALYZE {
     """
 
     stub:
-    def prefix = task.ext.prefix ?: id
+    def prefix = task.ext.prefix ?: meta.id
     """
     touch ${prefix}.align.report.json
     touch ${prefix}.align.report.txt

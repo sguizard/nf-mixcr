@@ -11,9 +11,6 @@ process MIXCR_EXPORTQC_TAGS {
     path "versions.yml"        , emit: versions
 
     script:
-    def args   = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: id
-
     """
     mixcr exportQc tags $vdjca ${id}_exportQC_tags.pdf
     mixcr exportQc tags $vdjca ${id}_exportQC_tags.png
@@ -25,7 +22,6 @@ process MIXCR_EXPORTQC_TAGS {
     """
 
     stub:
-    def prefix = task.ext.prefix ?: id
     """
     touch ${id}_exportQC_tags.pdf
     touch ${id}_exportQC_tags.png
