@@ -104,7 +104,7 @@ def getMixcrAnalyzeConf() {
     cmd.execute()
     
     log.info """
-    📦 Package delivered!
+    📦  Package delivered!
 
     (mixcr_analyze_template.config pulled from Github repo and renamed into mixcr_analyze.config)"
     """
