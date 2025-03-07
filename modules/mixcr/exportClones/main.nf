@@ -15,6 +15,8 @@ process MIXCR_EXPORTCLONES {
     def prefix = task.ext.prefix ?: meta.id
 
     """
+    export _JAVA_OPTIONS="-XX:-UsePerfData"
+
     mixcr exportClones $clns ${prefix}_exportClones.tsv
 
     cat <<-END_VERSIONS > versions.yml

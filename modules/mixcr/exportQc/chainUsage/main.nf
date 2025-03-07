@@ -14,6 +14,8 @@ process MIXCR_EXPORTQC_CHAINUSAGE {
 
     script:
     """
+    export _JAVA_OPTIONS="-XX:-UsePerfData"
+
     mixcr exportQc chainUsage *.clns ${study}_exportQC_chainUsage.pdf
     mixcr exportQc chainUsage *.clns ${study}_exportQC_chainUsage.png
 

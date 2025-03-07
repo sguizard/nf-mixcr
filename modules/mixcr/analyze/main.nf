@@ -32,6 +32,8 @@ process MIXCR_ANALYZE {
     lib = lib.replaceFirst('.json.gz', '')
 
     """
+    export _JAVA_OPTIONS="-XX:-UsePerfData"
+    
     mixcr analyze \\
         $preset \\
         $args \\

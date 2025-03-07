@@ -12,6 +12,8 @@ process MIXCR_EXPORTQC_TAGS {
 
     script:
     """
+    export _JAVA_OPTIONS="-XX:-UsePerfData"
+
     mixcr exportQc tags $vdjca ${id}_exportQC_tags.pdf
     mixcr exportQc tags $vdjca ${id}_exportQC_tags.png
 

@@ -14,6 +14,8 @@ process MIXCR_EXPORTQC_ALIGN {
 
     script:
     """
+    export _JAVA_OPTIONS="-XX:-UsePerfData"
+
     mixcr exportQc align *.clns ${study}_exportQC_align.pdf
     mixcr exportQc align *.clns ${study}_exportQC_align.png
 

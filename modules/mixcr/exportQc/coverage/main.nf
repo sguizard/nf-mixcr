@@ -15,6 +15,8 @@ process MIXCR_EXPORTQC_COVERAGE {
     def prefix = task.ext.prefix ?: meta.id
 
     """
+    export _JAVA_OPTIONS="-XX:-UsePerfData"
+
     mixcr exportQc coverage $vdjca ${prefix}_exportQC_coverage.pdf
     mixcr exportQc coverage $vdjca ${prefix}_exportQC_coverage.png
 
