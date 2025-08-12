@@ -1,4 +1,5 @@
 # nf-mixcr: TCR repertoire building with MiXCR
+
 [![DOI](https://zenodo.org/badge/741817997.svg)](https://zenodo.org/doi/10.5281/zenodo.10678866)
 
 `nf-mixcr` is nextflow pipeline running MiXCR to build T-cell repertoire from illumina sequencing.
@@ -150,7 +151,7 @@ You will set two kind of options:
 The nextflow options that need to be used are:
 
 - `-profile`: select the adhoc virtualization technology (docker or singularity) and the profile of your cluster (eg. eddie). Profiles are separated by commas (eg. docker,eddie).
-- ` -c`: define additional configuration. Please add the mandatory `mixcr_analyze.config` file here.
+- `-c`: define additional configuration. Please add the mandatory `mixcr_analyze.config` file here.
 
 The pipeline options are:
 
@@ -160,6 +161,7 @@ The pipeline options are:
 - `--study`: An ID that will be used as prefix for global report files (**Default: TCR**)
 - `--outdir`: the name of the directory where the results will be publish (**Default: results**)
 - `--get_ma_conf`: Download a copy of template `mixcr_analysis.config` and stop
+- `--get_sing_fix`: Download a copy of `fix_singularity-mount_home.config` and stop
 
 Some option must be defined for each run and can't be omitted.
 The **compulsory** options are:
@@ -276,52 +278,30 @@ The execution trace report gather the raw data about job execution (included job
 
 ## Tips and Troubleshooting known problems
 
-### Roslin Institute users: Fix eddie config
+### Roslin Institute users: Roslin profile
 
-Dear Roslin eddies users,
+Dear Roslin eddie users,
 
-If you have already run a nextflow pipeline on eddie, there are big chances you face an error message about singularity images caching directory.
-This error is caused by the permission of the `/exports/igmm/eddie/BioinformaticsResources/nfcore/singularity-images` directory which is not accessible to all users.
-
-In order to fix this, you can create an `eddie_fix.confg` file and add the following lines to it:
-
-```txt
-singularity {
-  envWhitelist = "SINGULARITY_TMPDIR,TMPDIR"
-  runOptions = '-p -B "$TMPDIR"'
-  enabled = true
-  autoMounts = true
-  cacheDir = "/exports/eddie/scratch/<username>/singularity-images"
-}
-```
-
-Do not forget to **replace** the <username> placeholder.
-
-This will store the singularity image in a directory in your scratch directory. Do not forget to **delete it** once the pipeline finished running!
-This is obviously a temporary fix. Discussions are running at the Roslin Institute to find a solution to this problem. Pushing a roslin specific configuration is considered.
-
-**NB:** You will need to apply the next fix too.
+Using Nextflow is not as straigth forward as it should be.
+Most of the time, it's necessary to add a custom configuration file to fix some issues.
+That's why profiles exists. The Roslin bioinformqtics group has created the Roslin profile to makes nextflow execution as smooth as possible.
+To use it, please specify the `-profile roslin` option in your command line.
 
 ### Correct MiXCR license detection
 
-To being sure that MiXCR can correctly access to your license, you should update the singularity `-B` option by adding this following lines into a custom configuration file (eddie_fix.config for example 😜).
-
-```txt
-singularity {
-  runOptions = '-p -B "$TMPDIR",/home/<username>'
-}
-```
-
-Do not forget to replace the <username> placeholder with yours.
-
+To being sure that MiXCR can correctly access to your license, your home directory must be mounted in the container.
+This can be fixed by adding a configuration file.
+No worries, no need to write anything.
+Run the pipeline with the `--get_sing_fix` option and it will download a configuration file that will fix this issue.
+Then in the command line, you can add the `-c fix_singularity-mount_home.config` option.
 
 ### Example command line
 
 ```bash
 nextflow run sguizard/nf-mixcr \
-    -profile eddie \
+    -profile roslin \
     -c data/mixcr_analyze.config \
-    -c data/eddie_fix.config \
+    -c data/fix_singularity-mount_home.config \
     --samplesheet data/samplesheet.csv \
     --preset generic-amplicon-with-umi \
     --library data/imgt.202312-3.sv8.json.gz \
@@ -332,12 +312,11 @@ nextflow run sguizard/nf-mixcr \
 
 Contributions are welcome! Just try to following the code formatting the best as you can.
 
-
 ## Citation
+
 Please cite my work if you use it in own research, thanks! 🙏
 
 Sébastien Guizard. (2024). sguizard/nf-mixcr: nf-mixcr v1.0.1 (v1.0.1). Zenodo. https://doi.org/10.5281/zenodo.10678867
-
 
 ## Footnotes
 

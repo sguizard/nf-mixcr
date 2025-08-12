@@ -2,7 +2,8 @@ workflow PIPELINE_INITIALISATION {
 
     main:
     // Does the user need a copy of mixcr analysis config file? 
-    if (params.get_ma_conf) { getMixcrAnalyzeConf() }
+    if (params.get_ma_conf) { getMixcrAnalyzeConf()   }
+    if (params.get_ma_conf) { getSingularityFixConf() }
 
 
     // Checking mandatory parameters
@@ -111,4 +112,14 @@ def getMixcrAnalyzeConf() {
     System.exit(0)
 }
 
+def getSingularityFixConf() {
+    def cmd = 'wget -O fix_singularity-mount_home.config https://raw.githubusercontent.com/sguizard/nf-mixcr/dev/configs/fix_singularity-mount_home.config'
+    cmd.execute()
+    
+    log.info """
+    📦  Package delivered!
 
+    (fix_singularity-mount_home.config pulled from Github repo)"
+    """
+    System.exit(0)
+}
