@@ -1,7 +1,7 @@
 process MIXCR_ANALYZE {
     tag "$meta.id"
 
-    container 'ghcr.io/milaboratory/mixcr/mixcr:4.6.0'
+    container 'ghcr.io/milaboratory/mixcr/mixcr:4.7.0'
     // container 'https://github.com/sguizard/mixcr-singularity-container/blob/master/mixcr.sif'
 
     input:

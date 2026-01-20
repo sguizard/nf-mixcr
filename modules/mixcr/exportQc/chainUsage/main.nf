@@ -1,6 +1,6 @@
 process MIXCR_EXPORTQC_CHAINUSAGE {
     tag "$study"
-    container 'ghcr.io/milaboratory/mixcr/mixcr:4.6.0'
+    container 'ghcr.io/milaboratory/mixcr/mixcr:4.7.0'
 
     input:
     val(study) 

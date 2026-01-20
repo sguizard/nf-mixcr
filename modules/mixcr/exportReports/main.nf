@@ -1,6 +1,6 @@
 process MIXCR_EXPORTREPORTS {
     tag "$meta.id"
-    container 'ghcr.io/milaboratory/mixcr/mixcr:4.6.0'
+    container 'ghcr.io/milaboratory/mixcr/mixcr:4.7.0'
 
     input:
     tuple val(meta), path(clns)

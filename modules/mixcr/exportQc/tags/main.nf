@@ -1,5 +1,5 @@
 process MIXCR_EXPORTQC_TAGS {
-    container 'ghcr.io/milaboratory/mixcr/mixcr:4.6.0'
+    container 'ghcr.io/milaboratory/mixcr/mixcr:4.7.0'
 
     input:
     tuple val(id), path(vdjca)
